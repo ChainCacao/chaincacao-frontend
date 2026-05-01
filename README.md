@@ -1,10 +1,11 @@
-🍫 ChainCacao – Système de Traçabilité Immuable
+# 🍫 ChainCacao – Système de Traçabilité Immuable
+
 ChainCacao est une solution technologique dédiée à la transformation de la filière cacao au Togo. Elle garantit la conformité aux normes EUDR (Règlementation européenne contre la déforestation) et assure la transparence des revenus des agriculteurs grâce à la puissance de la Blockchain.
 
-🚀 État actuel du projet
+# 🚀 État actuel du projet
 Le projet est actuellement en phase de développement Frontend et de modélisation de la logique métier. L’architecture est conçue selon une approche Mobile-First, garantissant une stack moderne, légère et scalable.
 
-✅ Réalisations
+# ✅ Réalisations
 Identité Visuelle Hybride : Fusion entre la rigueur fonctionnelle des SaaSet l'identité organique de ChainCacao.
 
 Dashboard Agriculteur : Suivi en temps réel des récoltes, des revenus et du score de conformité.
@@ -23,7 +24,7 @@ Portail Coopérative : Interface d'accueil, inscription et gestion des flux de p
 
 Architecture de Navigation : Routage dynamique fluide via react-router-dom.
 
-🛠️ Stack Technique
+#   🛠️ Stack Technique
 Core : React 18, TypeScript, Tailwind CSS.
 
 UI/UX : frame motion, Lucide React (Icônes).
@@ -32,8 +33,10 @@ Navigation : React Router v6.
 
 Sécurité & Blockchain : Algorithmes SHA-256 pour le hachage des preuves (en attente d'intégration ethers.js sur le testnet Sepolia).
 
-📅 Roadmap Phase 2 – Présentation Jury
-🎯 Objectif
+
+#  📅 Roadmap Phase 2 – Présentation Jury
+
+## 🎯 Objectif
 Présenter un prototype professionnel qui démontre :
 
 Traçabilité complète (récolte → validation → certification → export).
@@ -44,7 +47,8 @@ Connexion blockchain réelle (Sepolia).
 
 Modules antifraude et conformité EUDR visibles, même si certains sont simulés.
 
-🛠️ Étapes de développement
+## 🛠️ Étapes de développement
+
 1️⃣ Frontend – Interfaces
 [ ] Dashboard Agriculteur : récoltes, revenus, conformité.
 
@@ -103,7 +107,7 @@ getLot() → vérificateur.
 [ ] Timeline lot → cycle complet visible.
 
 
-📖 Livrables pour la phase 2
+# 📖 Livrables pour la phase 2
 Prototype React (mobile‑first).
 
 Smart contract déployé sur Sepolia.
@@ -115,7 +119,7 @@ Workflow imprimable (acteur / action / résultat).
 Démo en conditions réelles (connexion MetaMask, QR code, Etherscan).
 
 
-📖 Guide de Contribution – ChainCacao
+# 📖 Guide de Contribution – ChainCacao
 Pour maintenir la qualité et la cohérence du projet, chaque collaborateur s’engage à respecter les règles suivantes :
 
 🔧 Standardisation
@@ -127,7 +131,7 @@ Respecter la hiérarchie des composants React (découpage logique et réutilisab
 
 Utiliser Tailwind CSS et Shadcn UI pour garantir une identité visuelle homogène.
 
-🔗 Workflow
+# 🔗 Workflow
 Suivre la chaîne de valeur définie :
 Agriculteur → Coopérative → Exportateur → Certificateur → Vérificateur.
 
@@ -137,7 +141,7 @@ Les données critiques (lotId, poids, GPS, hash) doivent être reliées au smart
 
 Les données administratives (profil, téléphone, documents) restent off‑chain (backend ou simulation Zustand).
 
-📚 Documentation
+# 📚 Documentation
 Chaque nouveau module ou composant doit être accompagné d’un README interne dans son dossier.
 
 Le README doit préciser :
@@ -150,7 +154,7 @@ Instructions pour tester et valider.
 
 Les commits doivent être clairs et respecter une convention (feat:, fix:, docs:, test:).
 
-🧪 Tests & Validation
+# 🧪 Tests & Validation
 Valider systématiquement les transactions blockchain sur Sepolia avant toute fusion (Pull Request).
 
 Vérifier :
@@ -165,7 +169,7 @@ Ajouter des tests unitaires pour la logique critique (validation des champs, gé
 
 Aucun code ne doit être fusionné sans review croisée (au moins 1 autre collaborateur valide).
 
-🚀 Bonnes pratiques
+# 🚀 Bonnes pratiques
 Toujours travailler sur une branche dédiée (feature/nom-module).
 
 Utiliser Issues GitHub pour décrire les tâches et suivre l’avancement.
@@ -175,15 +179,15 @@ Respecter la roadmap : ne pas développer de fonctionnalités hors périmètre d
 Anticiper la transition backend : ne pas coder en dur, prévoir API simulée (Zustand) puis réelle (Node.js).
 
 
-💻 Installation & Lancement
+# 💻 Installation & Lancement
 Bash
-# 1. Cloner le dépôt
+## 1. Cloner le dépôt
 git clone [URL_DU_REPO]
 
-# 2. Installer les dépendances
+## 2. Installer les dépendances
 npm install
 
-# 3. Lancer l'environnement de développement
+## 3. Lancer l'environnement de développement
 npm run dev
 
 ---
