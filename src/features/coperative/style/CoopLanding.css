@@ -1,0 +1,132 @@
+:root {
+    --gold: #d4a017;
+    --cream: #faf3e0;
+    --white: #ffffff;
+    --gray-light: #f1f1f1;
+}
+
+.hero {
+    min-height: 100vh;
+    padding: 48px 22px 110px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background:
+        radial-gradient(circle at top, #7b4a20 0%, rgba(123, 74, 32, .1) 45%, transparent 100%),
+        linear-gradient(160deg, #2b1608 0%, #60361d 58%, #7b4a20 100%);
+    color: var(--cream);
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    border: 1px solid rgba(212, 160, 23, .55);
+    border-radius: 999px;
+    padding: 8px 14px;
+    background: rgba(212, 160, 23, .14);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.hero-title {
+    font-size: 34px;
+    font-weight: 900;
+    margin-top: 18px;
+}
+
+.hero-title span {
+    color: var(--gold);
+}
+
+.hero-sub {
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: .88;
+    margin-top: 12px;
+}
+
+.hero-points {
+    display: grid;
+    gap: 10px;
+    margin: 28px 0;
+}
+
+.hero-point {
+    background: rgba(255, 255, 255, .08);
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: 16px;
+    padding: 12px 14px;
+    text-align: left;
+}
+
+.hero-point strong {
+    display: block;
+    font-size: 13px;
+    color: var(--gold);
+    margin-bottom: 4px;
+}
+
+.hero-point span {
+    font-size: 12px;
+    line-height: 1.45;
+    color: rgba(250, 243, 224, .85);
+}
+
+/* Utilitaires boutons */
+.btn-full.gold {
+    background: var(--gold);
+    color: #2b1608;
+    border: none;
+    padding: 18px;
+    border-radius: 16px;
+    font-weight: 800;
+    width: 100%;
+    cursor: pointer;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, .2);
+    color: var(--cream);
+    padding: 16px;
+    border-radius: 16px;
+    width: 100%;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.lang-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.lang-item {
+    border: 1px solid rgba(255, 255, 255, .16);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, .08);
+    padding: 13px 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+}
+
+.lang-item.active {
+    border-color: var(--gold);
+    background: rgba(212, 160, 23, .2);
+    color: var(--gold);
+}
+
+.mt-6 {
+    margin-top: 24px;
+}
+
+.mt-3 {
+    margin-top: 12px;
+}

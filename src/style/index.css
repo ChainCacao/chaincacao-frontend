@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  /* Palette ChainCacao */
+  --color-cacao: #3B1E08;
+  --color-cacao-mid: #6B3A1F;
+  --color-gold: #D4A017;
+  --color-cream: #FAF3E0;
+  
+  /* Fonts */
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "DM Sans", sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-cream text-cacao font-sans antialiased;
+  }
+}
