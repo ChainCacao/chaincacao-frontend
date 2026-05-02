@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { coopLoginSchema } from '../lib/coopLoginSchema';
 import type { CoopLoginFormData } from '../lib/coopLoginSchema';
-import { authService } from '../../agriculteur/services/authService';
 import { useAuthStore } from '../../../stores/useAuthStore';
 import { QrCode, ArrowLeft, Loader2, ShieldCheck, X, Building2 } from 'lucide-react';
 

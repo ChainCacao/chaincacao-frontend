@@ -218,7 +218,8 @@ export default function VerifierModule() {
       </p>
     </footer>
   </div>
-);
+  );
+}
 
 // --- SOUS-COMPOSANTS ---
 
