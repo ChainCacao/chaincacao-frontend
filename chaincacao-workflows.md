@@ -379,3 +379,10 @@ Supervision et régulation du secteur cacaoyer
 ---
 
 *Ce workflow documente l'ensemble des processus ChainCacao, assurant une traçabilité complète du cacao togolais du champ à l'exportateur européen, avec conformité EUDR garantie.*
+
+### Cloner le projet 
+git clone
+
+### Lancer le projet
+cd frontend
+npm run dev

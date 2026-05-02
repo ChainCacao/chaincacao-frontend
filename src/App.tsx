@@ -9,11 +9,11 @@ import CoopDashboard from './features/coperative/pages/CoopDashboard';
 import CoopLoginPage from './features/coperative/pages/CoopLoginPage';
 import ProducerManagementPage from './features/coperative/pages/ProducerManagementPage';
 import PartnerModule from './features/coperative/pages/PartnerModule';
-import TransformerModule from './features/agriculteur/pages/TransformerModule';
-import ExporterModule from './features/agriculteur/pages/ExporterModule';
-import CertifierModule from './features/agriculteur/pages/CertifierModule';
-import MinistryModule from './features/agriculteur/pages/MinistryModule';
-import VerifierModule from './features/agriculteur/pages/VerifierModule';
+import TransformerModule from './features/transformateurs/pages/TransformerModule';
+import ExporterModule from './features/exportateur/pages/ExporterModule';
+import CertifierModule from './features/certificateur/pages/CertifierModule';
+import MinistryModule from './features/Admin/pages/MinistryModule';
+import VerifierModule from './features/importateur/pages/VerifierModule';
 
 function App() {
   return (
