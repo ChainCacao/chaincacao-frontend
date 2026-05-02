@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import NavigationMenu from '../../../components/NavigationMenu';
 import { 
   ArrowLeft, MapPin, Camera, Check, 
-  Loader2, Info, ChevronRight, QrCode, Share2,
+  Loader2, ChevronRight, QrCode, Share2,
   ShieldCheck, ExternalLink, RefreshCw
 } from 'lucide-react';
 
@@ -51,7 +52,8 @@ export default function CreateLotPage() {
   const isFormValid = formData.poids && Number(formData.poids) > 0;
 
   return (
-    <div className="min-h-screen bg-[#FDFDFD] flex flex-col items-center font-sans">
+    <div className="min-h-screen bg-[#FDFDFD] flex flex-col font-sans">
+      <NavigationMenu />
       
       {/* Header : Navigation Intuitive */}
       <header className="w-full h-16 border-b border-slate-100 flex items-center px-6 bg-white/80 backdrop-blur-md sticky top-0 z-50">
@@ -74,7 +76,7 @@ export default function CreateLotPage() {
         <div className="w-10"></div>
       </header>
 
-      <main className="w-full max-w-xl p-6 md:py-12">
+      <main className="w-full max-w-xl p-6 md:py-12 mx-auto">
         
         {/* ÉTAPE 1 : RÉCOLTE */}
         {step === 1 && (
@@ -86,9 +88,9 @@ export default function CreateLotPage() {
 
             <div className="space-y-6">
               <div className="group">
-                <label className="text-[11px] font-bold text-slate-500 uppercase ml-1 mb-2 block">Variété de Cacao</label>
+                <label className="text-[11px] font-bold text-slate-500 uppercase mb-2 block text-center">Variété de Cacao</label>
                 <select 
-                  className="w-full p-4 bg-white border-2 border-slate-100 rounded-2xl font-bold text-slate-800 outline-none focus:border-[#3B1E08] transition-all appearance-none cursor-pointer shadow-sm"
+                  className="w-full p-4 bg-white border-2 border-slate-100 rounded-2xl font-bold text-slate-800 outline-none focus:border-[#3B1E08] transition-all appearance-none cursor-pointer shadow-sm text-center"
                   value={formData.variete}
                   onChange={(e) => setFormData({...formData, variete: e.target.value})}
                 >
@@ -99,12 +101,12 @@ export default function CreateLotPage() {
               </div>
 
               <div className="relative">
-                <label className="text-[11px] font-bold text-slate-500 uppercase ml-1 mb-2 block">Poids net (KG)</label>
+                <label className="text-[11px] font-bold text-slate-500 uppercase mb-2 block text-center">Poids net (KG)</label>
                 <input 
                   type="number" 
                   inputMode="decimal"
                   placeholder="0.00"
-                  className="w-full p-6 bg-white border-2 border-slate-100 rounded-[2rem] text-4xl font-black outline-none focus:border-[#3B1E08] transition-all shadow-sm"
+                  className="w-full p-6 bg-white border-2 border-slate-100 rounded-[2rem] text-4xl font-black outline-none focus:border-[#3B1E08] transition-all shadow-sm text-center"
                   value={formData.poids}
                   onChange={(e) => setFormData({...formData, poids: e.target.value})}
                 />

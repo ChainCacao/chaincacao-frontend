@@ -1,4 +1,3 @@
-import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { 
   ArrowLeft, MapPin, Calendar, Scale, 
@@ -44,7 +43,7 @@ export default function LotDetailPage() {
       <main className="flex-1 p-5 space-y-6 max-w-xl mx-auto w-full">
         
         {/* CARD PRINCIPALE : IDENTITÉ */}
-        <section className="bg-[#3B1E08] rounded-[2rem] p-6 text-white shadow-xl relative overflow-hidden">
+        <section className="bg-cacao rounded-[2rem] p-6 text-white shadow-xl relative overflow-hidden">
           <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/5 rounded-full blur-3xl"></div>
           
           <div className="flex justify-between items-start mb-8">
@@ -95,7 +94,7 @@ export default function LotDetailPage() {
               <div key={index} className="flex gap-4 relative">
                 {/* Ligne verticale entre les points */}
                 {index !== lot.historique.length - 1 && (
-                  <div className="absolute left-[11px] top-7 w-[2px] h-10 bg-slate-100"></div>
+                  <div className="absolute left-2.75 top-7 w-[2px] h-10 bg-slate-100"></div>
                 )}
                 
                 <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 z-10 ${

@@ -31,7 +31,7 @@ const LoginPage: React.FC = () => {
         setValue("internalId", decodedText); // Remplit l'ID automatiquement
         setShowScanner(false);
         scanner.clear();
-      }, (_error) => {
+      }, () => {
         // On ignore les erreurs de scan continu pour ne pas polluer la console
       });
 
@@ -44,8 +44,9 @@ const LoginPage: React.FC = () => {
       const farmer = await authService.login(data);
       loginToStore(farmer);
       navigate('/agriculteur/dashboard');
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err: unknown) {
+      const error = err as Error;
+      console.error(error.message);
     }
   };
 

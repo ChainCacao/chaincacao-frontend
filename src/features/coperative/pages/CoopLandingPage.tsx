@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
-  ChevronRight, Globe, ShieldCheck, 
+  Globe, ShieldCheck, 
   Truck, ClipboardCheck, ArrowRight 
 } from 'lucide-react';
 
@@ -81,7 +81,7 @@ export default function CoopLandingPage() {
           </button>
 
           <button 
-            onClick={() => navigate('/cooperative/dashboard')}
+            onClick={() => navigate('/cooperative/login')}
             className="w-full bg-transparent border-2 border-cacao/10 text-cacao py-6 rounded-[2.5rem] font-bold text-sm hover:bg-cacao/5 transition-all active:scale-95"
           >
             Déjà inscrit ? <span className="font-black underline ml-1">Se connecter</span>
