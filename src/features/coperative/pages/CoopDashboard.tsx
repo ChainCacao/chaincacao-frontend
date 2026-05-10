@@ -3,7 +3,7 @@ import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { 
   LayoutDashboard, PackageCheck, Truck, Users, 
   FileText, ShieldCheck, AlertTriangle, CheckCircle2, 
-  XCircle, Bell, LogOut, Menu, X, Settings, HelpCircle, UserPlus
+  XCircle, Bell, LogOut, Menu, X, Settings, HelpCircle, UserPlus, Layers
 } from 'lucide-react';
 import { useAuthStore } from '../../../stores/useAuthStore';
 import AddProducerModal from './AddProducerModal';
@@ -31,6 +31,7 @@ export default function CoopDashboard() {
   const menuItems = [
     { label: 'Vue d\'ensemble', icon: <LayoutDashboard size={20} />, path: '/cooperative/dashboard' },
     { label: 'Réceptions', icon: <PackageCheck size={20} />, path: '/cooperative/receptions' },
+    { label: 'Regroupement', icon: <Layers size={20} />, path: '/cooperative/regroupement' },
     { label: 'Transferts', icon: <Truck size={20} />, path: '/cooperative/transferts' },
     { label: 'Producteurs', icon: <Users size={20} />, path: '/cooperative/membres' },
     { label: 'Documents & EUDR', icon: <FileText size={20} />, path: '/cooperative/documents' },

@@ -2,7 +2,7 @@ import { useState, useEffect, type ReactNode } from 'react';
 import { 
   LayoutDashboard, Package, Wallet, ShieldCheck, 
   Bell, Menu, Plus, MoreHorizontal, 
-  ExternalLink, LogOut, ChevronRight
+  ExternalLink, LogOut, ChevronRight, Layers
 } from 'lucide-react';
 import { agriService } from '../services/agriService';
 import { useAuthStore } from '../../../stores/useAuthStore';
@@ -102,6 +102,7 @@ export default function Dashboard() {
           <nav className="p-4 mt-4 space-y-1">
             <NavItem icon={<LayoutDashboard size={18}/>} label="Tableau de bord" active />
             <NavItem icon={<Package size={18}/>} label="Mes Récoltes" />
+            <NavItem icon={<Layers size={18}/>} label="Suivi Groupements" onClick={() => navigate('/agriculteur/regroupement')} />
             <NavItem icon={<Wallet size={18}/>} label="Mes Finances" />
             <NavItem icon={<ShieldCheck size={18}/>} label="Conformité EUDR" />
           </nav>
@@ -236,15 +237,19 @@ type NavItemProps = {
   icon: ReactNode;
   label: string;
   active?: boolean;
+  onClick?: () => void;
 };
 
-const NavItem = ({ icon, label, active = false }: NavItemProps) => (
-  <button className={`
-    w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all
-    ${active 
-      ? 'bg-gold text-cacao shadow-md' 
-      : 'text-white/60 hover:bg-white/5 hover:text-white'}
-  `}>
+const NavItem = ({ icon, label, active = false, onClick }: NavItemProps) => (
+  <button 
+    onClick={onClick}
+    className={`
+      w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all
+      ${active 
+        ? 'bg-gold text-cacao shadow-md' 
+        : 'text-white/60 hover:bg-white/5 hover:text-white'}
+    `}
+  >
     {icon}
     {label}
   </button>

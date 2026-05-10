@@ -2,7 +2,9 @@ import { useState, useMemo } from 'react';
 import { 
   Users, UserPlus, Search, 
   MapPin, ShieldCheck, Trash2, Edit3, 
-  XCircle, ChevronRight, Download
+  XCircle, ChevronRight, Download, Home,
+  BarChart, Package, Settings, LogOut,
+  Calendar, Building2, FileText
 } from 'lucide-react';
 import AddProducerModal from './AddProducerModal';
 
@@ -24,6 +26,7 @@ export default function ProducerManagementPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState<ProducerStatus | 'Tous'>('Tous');
   const [isAddProducerModalOpen, setIsAddProducerModalOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   // Mock data - À remplacer par ton appel API plus tard
   const [producers] = useState<Producer[]>([
@@ -43,67 +46,112 @@ export default function ProducerManagementPage() {
   }, [searchTerm, filterStatus, producers]);
 
   return (
-    <div className="space-y-6">
-      {/* HEADER DE PAGE */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-serif font-black text-cacao flex items-center gap-3">
-            <Users className="text-gold" size={28} />
+    <div className="min-h-screen bg-cream/30 flex">
+      {/* SIDEBAR */}
+      <aside className={`${sidebarOpen ? 'w-72' : 'w-20'} bg-cacao text-cream transition-all duration-300 flex flex-col shadow-2xl`}>
+        {/* Header Sidebar */}
+        <div className="p-6 border-b border-cacao/20">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 bg-gold rounded-2xl flex items-center justify-center text-cacao font-black shadow-lg">
+              <Building2 size={24} />
+            </div>
+            {sidebarOpen && (
+              <div>
+                <h2 className="font-serif font-black text-xl">Coopérative</h2>
+                <p className="text-[10px] font-black uppercase text-gold/80 tracking-widest">Kpalimé Central</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Navigation */}
+        <nav className="flex-1 p-4 space-y-2">
+          <SidebarItem icon={<Home size={20} />} label="Dashboard" active={false} sidebarOpen={sidebarOpen} />
+          <SidebarItem icon={<Users size={20} />} label="Producteurs" active={true} sidebarOpen={sidebarOpen} />
+          <SidebarItem icon={<Package size={20} />} label="Lots" active={false} sidebarOpen={sidebarOpen} />
+          <SidebarItem icon={<BarChart size={20} />} label="Statistiques" active={false} sidebarOpen={sidebarOpen} />
+          <SidebarItem icon={<FileText size={20} />} label="Rapports" active={false} sidebarOpen={sidebarOpen} />
+          <SidebarItem icon={<Calendar size={20} />} label="Calendrier" active={false} sidebarOpen={sidebarOpen} />
+        </nav>
+
+        {/* Footer Sidebar */}
+        <div className="p-4 border-t border-cacao/20 space-y-2">
+          <SidebarItem icon={<Settings size={20} />} label="Paramètres" active={false} sidebarOpen={sidebarOpen} />
+          <SidebarItem icon={<LogOut size={20} />} label="Déconnexion" active={false} sidebarOpen={sidebarOpen} />
+        </div>
+      </aside>
+
+      {/* MAIN CONTENT */}
+      <main className="flex-1 p-6 md:p-12 overflow-y-auto">
+        {/* Header avec bouton toggle sidebar */}
+        <div className="flex items-center justify-between mb-8">
+          <button
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="p-2 bg-white rounded-xl shadow-sm hover:shadow-md transition-all"
+          >
+            <ChevronRight className={`text-cacao transition-transform ${!sidebarOpen ? 'rotate-180' : ''}`} size={20} />
+          </button>
+          
+          <div className="flex gap-2">
+            <button className="bg-white border border-cacao/10 text-cacao px-4 py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-slate-50 transition-all">
+              <Download size={18} /> EXPORTER (CSV)
+            </button>
+            <button 
+              onClick={() => setIsAddProducerModalOpen(true)}
+              className="bg-cacao text-gold px-4 py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-cacao/20 hover:scale-105 transition-all"
+            >
+              <UserPlus size={18} /> NOUVEAU
+            </button>
+          </div>
+        </div>
+
+        {/* Page Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-serif font-black text-cacao flex items-center gap-3 mb-2">
+            <Users className="text-gold" size={32} />
             Registre des Producteurs
           </h1>
-          <p className="text-slate-500 text-sm italic">Gérez les membres de la coopérative et leur conformité légale.</p>
+          <p className="text-slate-500 text-medium">Gérez les membres de la coopérative et leur conformité légale.</p>
         </div>
-        <div className="flex gap-2">
-          <button className="flex-1 md:flex-none bg-white border border-cacao/10 text-cacao px-4 py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-slate-50 transition-all">
-            <Download size={18} /> EXPORTER (CSV)
-          </button>
-          <button 
-            onClick={() => setIsAddProducerModalOpen(true)}
-            className="flex-1 md:flex-none bg-cacao text-gold px-4 py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-cacao/20 hover:scale-105 transition-all"
-          >
-            <UserPlus size={18} /> NOUVEAU
-          </button>
-        </div>
-      </div>
 
-      {/* BARRE DE RECHERCHE ET FILTRES */}
-      <div className="bg-white p-4 rounded-[2rem] shadow-sm border border-cacao/5 flex flex-col lg:flex-row gap-4">
-        <div className="relative flex-1">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
-          <input 
-            type="text"
-            placeholder="Rechercher un nom ou un ID Producteur..."
-            className="w-full pl-12 pr-4 py-3 bg-slate-50 rounded-2xl outline-none focus:ring-2 ring-gold/30 border-transparent transition-all font-medium text-sm"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+        {/* BARRE DE RECHERCHE ET FILTRES */}
+        <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-cacao/5 flex flex-col lg:flex-row gap-4 mb-8">
+          <div className="relative flex-1">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+            <input 
+              type="text"
+              placeholder="Rechercher un nom ou un ID Producteur..."
+              className="w-full pl-12 pr-4 py-3 bg-slate-50 rounded-2xl outline-none focus:ring-2 ring-gold/30 border-transparent transition-all font-medium text-sm"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+          <div className="flex gap-2 overflow-x-auto pb-2 lg:pb-0">
+            {['Tous', 'Actif', 'En attente', 'Suspendu'].map((s) => (
+              <button
+                key={s}
+                onClick={() => setFilterStatus(s as any)}
+                className={`px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest whitespace-nowrap transition-all ${
+                  filterStatus === s 
+                  ? 'bg-gold text-cacao shadow-md' 
+                  : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                }`}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
         </div>
-        <div className="flex gap-2 overflow-x-auto pb-2 lg:pb-0">
-          {['Tous', 'Actif', 'En attente', 'Suspendu'].map((s) => (
-            <button
-              key={s}
-              onClick={() => setFilterStatus(s as any)}
-              className={`px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest whitespace-nowrap transition-all ${
-                filterStatus === s 
-                ? 'bg-gold text-cacao shadow-md' 
-                : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
-              }`}
-            >
-              {s}
-            </button>
-          ))}
-        </div>
-      </div>
 
       {/* LISTE DES PRODUCTEURS (DESKTOP: TABLEAU / MOBILE: CARDS) */}
-      <div className="bg-white rounded-[2.5rem] shadow-sm border border-cacao/5 overflow-hidden">
-        <div className="hidden md:block overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-slate-50/50 text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                <th className="px-6 py-5">Producteur</th>
-                <th className="px-6 py-5">Localisation</th>
-                <th className="px-6 py-5">Superficie</th>
+        <div className="bg-white rounded-[2.5rem] shadow-sm border border-cacao/5 overflow-hidden">
+          <div className="hidden md:block overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-slate-50/50 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                  <th className="px-6 py-5">Producteur</th>
+                  <th className="px-6 py-5">Localisation</th>
+                  <th className="px-6 py-5">Superficie</th>
                 <th className="px-6 py-5">EUDR Status</th>
                 <th className="px-6 py-5">Statut</th>
                 <th className="px-6 py-5 text-right">Actions</th>
@@ -203,10 +251,11 @@ export default function ProducerManagementPage() {
       </div>
 
       {/* MODAL AJOUT PRODUCTEUR */}
-      <AddProducerModal 
-        isOpen={isAddProducerModalOpen} 
-        onClose={() => setIsAddProducerModalOpen(false)} 
-      />
+        <AddProducerModal 
+          isOpen={isAddProducerModalOpen} 
+          onClose={() => setIsAddProducerModalOpen(false)} 
+        />
+      </main>
     </div>
   );
 }
@@ -223,5 +272,28 @@ const StatusBadge = ({ status }: { status: ProducerStatus }) => {
     <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase border ${styles[status]}`}>
       {status}
     </span>
+  );
+};
+
+// Composant SidebarItem
+const SidebarItem = ({ icon, label, active, sidebarOpen }: { 
+  icon: React.ReactNode; 
+  label: string; 
+  active: boolean; 
+  sidebarOpen: boolean;
+}) => {
+  return (
+    <button
+      className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+        active 
+          ? 'bg-gold text-cacao font-black shadow-lg shadow-gold/10' 
+          : 'text-cream/80 hover:bg-cream/10 hover:text-cream'
+      }`}
+    >
+      <div className="flex-shrink-0">{icon}</div>
+      {sidebarOpen && (
+        <span className="text-sm font-medium tracking-wide">{label}</span>
+      )}
+    </button>
   );
 };
