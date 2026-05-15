@@ -10,13 +10,14 @@ import CoopDashboard from './features/coperative/pages/CoopDashboard';
 import CoopLoginPage from './features/coperative/pages/CoopLoginPage';
 import CoopRegisterPage from './features/coperative/pages/CoopRegisterPage';
 import CoopTransferPage from './features/coperative/pages/CoopTransferPage';
-import LotGrouping from './features/coperative/pages/LotGrouping';
+import CoopLotGroupingPage from './features/coperative/pages/CoopLotGroupingPage';
 import ProducerManagementPage from './features/coperative/pages/ProducerManagementPage';
 import PartnerModule from './features/coperative/pages/PartnerModule';
 import TransformerModule from './features/transformateurs/pages/TransformerModule';
 import TransformerRegisterPage from './features/transformateurs/pages/TransformerRegisterPage';
 import TransformerLoginPage from './features/transformateurs/pages/TransformerLoginPage';
 import TransformerDashboard from './features/transformateurs/pages/TransformerDashboard';
+import TransformerReceptionPage from './features/transformateurs/pages/TransformerReceptionPage';
 import TransformerProductionPage from './features/transformateurs/pages/TransformerProductionPage';
 import TransformerTransferPage from './features/transformateurs/pages/TransformerTransferPage';
 import ExporterModule from './features/exportateur/pages/ExporterModule';
@@ -48,11 +49,7 @@ function App() {
         <Route path="/cooperative/register" element={<CoopRegisterPage />} />
         <Route path="/cooperative/membres" element={<ProducerManagementPage />} />
         <Route path="/cooperative/partenaires" element={<PartnerModule />} />
-        <Route path="/cooperative/regroupement" element={<LotGrouping 
-          availableLots={[]} 
-          onBack={() => {}} 
-          onConfirmGrouping={() => {}} 
-        />} />
+        <Route path="/cooperative/regroupement" element={<CoopLotGroupingPage />} />
         <Route path="/cooperative/transfert" element={<CoopTransferPage />} />
         
         {/* Modules transformateurs et exportateurs */}
@@ -60,6 +57,7 @@ function App() {
         <Route path="/transformateur/login" element={<TransformerLoginPage />} />
         <Route path="/transformateur/register" element={<TransformerRegisterPage />} />
         <Route path="/transformateur/dashboard" element={<TransformerDashboard />} />
+        <Route path="/transformateur/reception" element={<TransformerReceptionPage />} />
         <Route path="/transformateur/production" element={<TransformerProductionPage />} />
         <Route path="/transformateur/transfert" element={<TransformerTransferPage />} />
         <Route path="/exportateur" element={<ExporterModule />} />

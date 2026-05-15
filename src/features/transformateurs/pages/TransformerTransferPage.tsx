@@ -212,7 +212,7 @@ export default function TransformerTransferPage() {
         id: `TRANS-2024-${Date.now()}`,
         lotId: selectedLots.join(', '), // Multiple lots possible
         fromTransformer: 'Togo Chocoterie Industrielle',
-        toPartner: selectedPartner.name,
+        toPartner: selectedPartner?.name || 'Exportateur sélectionné',
         weight: totalWeight,
         status: 'confirmed',
         date: new Date().toISOString().split('T')[0],

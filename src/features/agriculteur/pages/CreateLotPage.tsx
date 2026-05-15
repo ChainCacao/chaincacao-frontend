@@ -6,6 +6,9 @@ import {
   Loader2, ChevronRight, QrCode, Share2,
   ShieldCheck, ExternalLink, RefreshCw
 } from 'lucide-react';
+import { lotService } from '../../../services/lot.service';
+import { getApiErrorMessage } from '../../../services/http';
+import type { LotMutationResponse } from '../../../types/api';
 
 // --- TYPES ---
 interface LotFormData {
@@ -20,7 +23,8 @@ export default function CreateLotPage() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<LotMutationResponse | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const [formData, setFormData] = useState<LotFormData>({
     poids: '',
@@ -50,6 +54,47 @@ export default function CreateLotPage() {
   };
 
   const isFormValid = formData.poids && Number(formData.poids) > 0;
+
+  const submitLot = async () => {
+    if (!formData.coords || !formData.photoChamp) {
+      setSubmitError('La photo du champ et le GPS sont obligatoires pour la conformité EUDR.');
+      return;
+    }
+
+    setLoading(true);
+    setSubmitError(null);
+    try {
+      const poidsNetKg = Number(formData.poids);
+      const response = await lotService.create({
+        filiere: 'CACAO',
+        especeVariete: formData.variete,
+        poidsBrutKg: Number((poidsNetKg + 1).toFixed(2)),
+        poidsNetKg,
+        nbSacsJute: 1,
+        tauxHumidite: 7.2,
+        photoCapture: {
+          photoChampUrl: 'https://example.com/photos/champ-cacao-mobile.jpg',
+          photoGps: {
+            latitude: formData.coords.lat,
+            longitude: formData.coords.lng,
+            precisionMetres: 10,
+            source: 'APP_CAMERA',
+          },
+          metadataPhotoExif: {
+            source: 'APP_CAMERA',
+            capturedAt: new Date().toISOString(),
+            photoSacCaptured: Boolean(formData.photoSac),
+          },
+        },
+      });
+      setResult(response);
+      setStep(4);
+    } catch (error) {
+      setSubmitError(getApiErrorMessage(error));
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#FDFDFD] flex flex-col font-sans">
@@ -204,19 +249,12 @@ export default function CreateLotPage() {
 
             <button 
               disabled={!formData.photoChamp || !formData.photoSac || loading}
-              onClick={() => {
-                setLoading(true);
-                // Simulation d'envoi blockchain
-                setTimeout(() => {
-                  setResult({ lotId: "CACAO-2024-X98" });
-                  setStep(4);
-                  setLoading(false);
-                }, 2000);
-              }}
+              onClick={submitLot}
               className="w-full bg-emerald-600 text-white py-6 rounded-[2.5rem] font-black tracking-widest shadow-xl shadow-emerald-100 flex justify-center items-center gap-3 active:scale-95 transition-all disabled:opacity-30"
             >
               {loading ? <Loader2 className="animate-spin" size={24}/> : 'SCELLER SUR LA BLOCKCHAIN'}
             </button>
+            {submitError && <p className="text-red-600 text-xs font-bold text-center">{submitError}</p>}
           </div>
         )}
 
@@ -245,7 +283,7 @@ export default function CreateLotPage() {
 
                   <div className="space-y-2">
                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Certificat Blockchain</p>
-                    <p className="text-2xl font-mono font-black text-[#3B1E08] tracking-tighter">{result?.lotId}</p>
+                    <p className="text-2xl font-mono font-black text-[#3B1E08] tracking-tighter">{result?.lot.codeLot}</p>
                   </div>
                </div>
 

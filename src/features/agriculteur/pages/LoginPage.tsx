@@ -7,6 +7,7 @@ import { loginSchema} from '../lib/loginSchema';
 import type { LoginFormData } from '../lib/loginSchema';
 import { authService } from '../services/authService';
 import { useAuthStore } from '../../../stores/useAuthStore';
+import { getApiErrorMessage } from '../../../services/http';
 import { QrCode, ArrowLeft, Loader2, ShieldCheck, X } from 'lucide-react';
 
 const LoginPage: React.FC = () => {
@@ -41,12 +42,11 @@ const LoginPage: React.FC = () => {
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      const farmer = await authService.login(data);
-      loginToStore(farmer);
+      const session = await authService.login({ identifier: data.internalId, password: data.password });
+      loginToStore(session);
       navigate('/agriculteur/dashboard');
     } catch (err: unknown) {
-      const error = err as Error;
-      console.error(error.message);
+      alert(getApiErrorMessage(err));
     }
   };
 
@@ -119,6 +119,19 @@ const LoginPage: React.FC = () => {
                 }`}
               />
               {errors.internalId && <p className="text-red-500 text-[10px] mt-2 font-bold uppercase">{errors.internalId.message}</p>}
+            </div>
+
+            <div>
+              <label className="block text-[11px] font-black text-gray-400 uppercase mb-2 ml-1">Mot de passe</label>
+              <input 
+                {...register("password")}
+                type="password"
+                placeholder="Secret123"
+                className={`w-full p-4 bg-gray-50 rounded-xl border-2 transition-all outline-none ${
+                  errors.password ? 'border-red-500 focus:border-red-500' : 'border-transparent focus:border-[#3B1E08] focus:bg-white'
+                }`}
+              />
+              {errors.password && <p className="text-red-500 text-[10px] mt-2 font-bold uppercase">{errors.password.message}</p>}
             </div>
 
             <button 

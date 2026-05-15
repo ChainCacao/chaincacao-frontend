@@ -212,7 +212,7 @@ export default function ExporterTransferPage() {
         id: `CERT-2024-${Date.now()}`,
         lotId: selectedLots.join(', '), // Multiple lots possible
         fromExporter: 'Togo Cacao Export International',
-        toPartner: selectedPartner.name,
+        toPartner: selectedPartner?.name || 'Certificateur sélectionné',
         weight: totalWeight,
         status: 'confirmed',
         date: new Date().toISOString().split('T')[0],
