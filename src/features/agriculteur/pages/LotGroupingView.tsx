@@ -1,3 +1,5 @@
+// TODO [SIMULATED] This page uses hardcoded mock data. Replace with real API call to lotService.list({agriculteurId}).
+// Backend integration needed: GET /lots?agriculteurId=&statutTrajet=
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -101,7 +103,7 @@ export default function LotGroupingView() {
   }, [groupedLots, searchTerm]);
 
   const getStatusBadge = (status: string) => {
-    const styles = {
+    const styles: Record<string, string> = {
       'pending': 'bg-amber-50 text-amber-600 border-amber-100',
       'in_progress': 'bg-blue-50 text-blue-600 border-blue-100',
       'completed': 'bg-emerald-50 text-emerald-600 border-emerald-100',

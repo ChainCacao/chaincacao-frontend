@@ -1,3 +1,5 @@
+// TODO [SIMULATED] This page uses hardcoded mock data. Replace with real API calls to lotService / ministryService.
+// Backend integration needed: GET /lots?certifieurId=&statutConformiteEUDR=, GET /certifieur/stats
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';

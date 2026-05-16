@@ -6,6 +6,8 @@ import { Html5QrcodeScanner } from "html5-qrcode";
 import { coopLoginSchema } from '../lib/coopLoginSchema';
 import type { CoopLoginFormData } from '../lib/coopLoginSchema';
 import { useAuthStore } from '../../../stores/useAuthStore';
+import { authService } from '../../../services/auth.service';
+import { getApiErrorMessage } from '../../../services/http';
 import { QrCode, ArrowLeft, Loader2, ShieldCheck, X, Building2 } from 'lucide-react';
 
 const CoopLoginPage: React.FC = () => {
@@ -36,11 +38,15 @@ const CoopLoginPage: React.FC = () => {
     }
   }, [showScanner, setValue]);
 
-  const onSubmit = (data: CoopLoginFormData) => {
-    // Simulation d'une connexion réussie immédiate pour accéder directement au dashboard
-    // On utilise l'ID saisi et on définit un nom par défaut pour l'affichage
-    loginToStore({ internalId: data.internalId, nom: "Union de Kara" } as any);
-    navigate('/cooperative/dashboard');
+  const onSubmit = async (data: CoopLoginFormData) => {
+    try {
+      const session = await authService.login({ identifier: data.internalId, password: data.password });
+      if (!session) return;
+      loginToStore(session);
+      navigate('/cooperative/dashboard');
+    } catch (error) {
+      alert(getApiErrorMessage(error));
+    }
   };
 
   return (
@@ -125,6 +131,19 @@ const CoopLoginPage: React.FC = () => {
                 }`}
               />
               {errors.internalId && <p className="text-red-500 text-[10px] mt-2 font-bold uppercase">{errors.internalId.message}</p>}
+            </div>
+
+            <div>
+              <label className="block text-[11px] font-black text-gray-400 uppercase mb-2 ml-1">Mot de passe</label>
+              <input 
+                {...register("password")}
+                type="password"
+                placeholder="Secret123"
+                className={`w-full p-4 bg-gray-50 rounded-xl border-2 transition-all outline-none font-bold ${
+                  errors.password ? 'border-red-500 focus:border-red-500' : 'border-transparent focus:border-[#D4A017] focus:bg-white'
+                }`}
+              />
+              {errors.password && <p className="text-red-500 text-[10px] mt-2 font-bold uppercase">{errors.password.message}</p>}
             </div>
 
             <button 

@@ -1,3 +1,5 @@
+// TODO [SIMULATED] This page uses hardcoded mock data. Replace with real API call to cooperativeService.getAgriculteurs().
+// Backend integration needed: GET /cooperatives/:id/agriculteurs
 import { useState, useMemo } from 'react';
 import { 
   Users, UserPlus, Search, 

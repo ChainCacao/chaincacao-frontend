@@ -1,3 +1,5 @@
+// TODO [SIMULATED] This page uses hardcoded mock data for KPIs and lot tables.
+// Backend integration needed: GET /cooperatives/:id/stats, GET /lots?cooperativeId=&statutTrajet=RECU_COOPERATIVE
 import { useState, useEffect } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { 
@@ -124,7 +126,7 @@ export default function CoopDashboard() {
                 <p className="text-[10px] text-gold font-bold uppercase mt-1 tracking-tighter">Node #TG-45</p>
               </div>
               <div className="w-10 h-10 rounded-full bg-cacao border-2 border-gold/20 flex items-center justify-center text-gold font-black shadow-inner">
-                {user?.nom?.substring(0, 1).toUpperCase() || 'K'}
+                {user?.name?.substring(0, 1).toUpperCase() || 'K'}
               </div>
             </div>
           </div>

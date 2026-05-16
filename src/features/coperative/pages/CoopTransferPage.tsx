@@ -196,7 +196,7 @@ export default function CoopTransferPage() {
         id: `TRANS-2024-${Date.now()}`,
         lotId: selectedLots[0], // Pour simplifier, on prend le premier lot
         fromCooperative: 'Coopérative Actuelle',
-        toPartner: selectedPartner.name,
+        toPartner: selectedPartner?.name || 'Partenaire sélectionné',
         weight: availableLots.find(lot => lot.id === selectedLots[0])?.weight || 0,
         status: 'confirmed',
         date: new Date().toISOString().split('T')[0],

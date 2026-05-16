@@ -1,3 +1,5 @@
+// TODO [SIMULATED] This module uses hardcoded mock data for approvals and stats.
+// Backend integration needed: GET /ministry/pending-validations, POST /ministry/validate, GET /ministry/stats
 import { useState } from 'react';
 import { 
   ShieldCheck, Users, BarChart, 

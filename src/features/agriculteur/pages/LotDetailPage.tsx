@@ -1,3 +1,5 @@
+// TODO [SIMULATED] This page uses hardcoded mock data. Replace with real API call to lotService.get(id).
+// Backend integration needed: GET /lots/:id
 import { useParams, useNavigate } from 'react-router-dom';
 import { 
   ArrowLeft, MapPin, Calendar, Scale, 
