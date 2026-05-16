@@ -97,7 +97,7 @@ const NavigationMenu = () => {
           <div className="flex items-center gap-4">
             <div className="text-right">
               <p className="text-sm font-medium text-gray-900">
-                {user?.nom || 'Utilisateur'}
+                {user?.name || 'Utilisateur'}
               </p>
               <p className="text-xs text-gray-500">
                 {user?.id || 'ID: Unknown'}
@@ -187,7 +187,7 @@ const NavigationMenu = () => {
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <p className="text-sm font-medium text-gray-900">
-                        {user?.nom || 'Utilisateur'}
+                        {user?.name || 'Utilisateur'}
                       </p>
                       <p className="text-xs text-gray-500">
                         {user?.id || 'ID: Unknown'}

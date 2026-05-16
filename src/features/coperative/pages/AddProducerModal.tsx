@@ -1,3 +1,5 @@
+// TODO [SIMULATED] This modal is UI-only and does not call the backend on save.
+// Backend integration needed: POST /cooperatives/:id/agriculteurs via cooperativeService.createAgriculteur()
 import { useState } from 'react';
 import { 
   X, User, Sprout, FileText, Wallet, 

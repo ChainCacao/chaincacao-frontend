@@ -41,6 +41,7 @@ const CoopLoginPage: React.FC = () => {
   const onSubmit = async (data: CoopLoginFormData) => {
     try {
       const session = await authService.login({ identifier: data.internalId, password: data.password });
+      if (!session) return;
       loginToStore(session);
       navigate('/cooperative/dashboard');
     } catch (error) {

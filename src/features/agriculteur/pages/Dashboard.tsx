@@ -125,7 +125,7 @@ export default function Dashboard() {
               <div className="hidden md:flex items-center gap-2 text-xs font-bold text-cacao/40 uppercase tracking-widest">
                 <span>Portail Agriculteur</span>
                 <ChevronRight size={12} />
-                <span className="text-cacao">{user?.village || 'Togo'}</span>
+                <span className="text-cacao">{user?.agriculteur?.village || 'Togo'}</span>
               </div>
             </div>
 
@@ -139,7 +139,7 @@ export default function Dashboard() {
                 <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
               </button>
               <div className="h-10 w-10 rounded-xl bg-cacao flex items-center justify-center text-gold font-bold shadow-sm">
-                {user?.nom?.substring(0, 2).toUpperCase() || 'AG'}
+                {(user?.agriculteur?.nom || user?.name)?.substring(0, 2).toUpperCase() || 'AG'}
               </div>
             </div>
           </header>
@@ -150,7 +150,7 @@ export default function Dashboard() {
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
               <div>
                 <h1 className="text-3xl font-black text-cacao tracking-tight">Dashboard</h1>
-                <p className="text-cacao/60 mt-1 text-sm font-medium">Bienvenue, {user?.nom}. Voici l'état de votre exploitation aujourd'hui.</p>
+                <p className="text-cacao/60 mt-1 text-sm font-medium">Bienvenue, {user?.agriculteur?.nom || user?.name}. Voici l'état de votre exploitation aujourd'hui.</p>
               </div>
               <button
               onClick={() => navigate('/agriculteur/nouveau-lot')}

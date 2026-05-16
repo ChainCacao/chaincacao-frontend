@@ -7,7 +7,7 @@ import {
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import { lotService } from '../../../services/lot.service';
 import { getApiErrorMessage } from '../../../services/http';
-import type { LotRecolte } from '../../../types/api';
+import type { LotRecolte, DocumentAssocie } from '../../../types/api';
 
 export default function VerifierModule() {
   const [searchId, setSearchId] = useState('');
@@ -158,7 +158,7 @@ export default function VerifierModule() {
                   <FileText size={14} /> Documents vérifiés
                 </h4>
                 <div className="flex flex-wrap gap-2">
-                  {(lotData.documentsAssocies || []).map((document) => (
+                  {((lotData.documentsAssocies as unknown as DocumentAssocie[] | null | undefined) || []).map((document: DocumentAssocie) => (
                     <a key={document.url} href={document.url} className="bg-white px-4 py-2 rounded-xl text-[10px] font-bold border border-slate-200 hover:border-gold flex items-center gap-2">
                       <Download size={12} /> {document.nom}
                     </a>

@@ -39,7 +39,7 @@ export default function CoopLotGroupingPage() {
   const handleConfirmGrouping = async (selectedIds: string[]) => {
     try {
       const result = await lotService.merge({ lotIds: selectedIds });
-      toast.success(result.notification?.message || 'Lots fusionnés');
+      toast.success('Lots fusionnés avec succès');
       navigate(`/agriculteur/lot/${result.lot.id}`);
     } catch (error) {
       toast.error(getApiErrorMessage(error));

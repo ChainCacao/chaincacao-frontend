@@ -1,3 +1,5 @@
+// TODO [SIMULATED] This page uses hardcoded mock data. Replace with real API calls to lotService / exportateurService.
+// Backend integration needed: GET /lots?exportateurId=&statutTrajet=, GET /exportateur/stats
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';

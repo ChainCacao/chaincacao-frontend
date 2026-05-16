@@ -1,3 +1,5 @@
+// TODO [SIMULATED] This page uses hardcoded mock data. Replace with real API call to lotService.list({agriculteurId}).
+// Backend integration needed: GET /lots?agriculteurId=&statutTrajet=
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 

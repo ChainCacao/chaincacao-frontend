@@ -1,3 +1,5 @@
+// TODO [SIMULATED] This registration page does not call the backend. Replace with authService.register() + certifieur payload.
+// Backend integration needed: POST /auth/register with certifieur payload
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';

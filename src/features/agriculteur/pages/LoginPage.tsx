@@ -43,6 +43,7 @@ const LoginPage: React.FC = () => {
   const onSubmit = async (data: LoginFormData) => {
     try {
       const session = await authService.login({ identifier: data.internalId, password: data.password });
+      if (!session) return;
       loginToStore(session);
       navigate('/agriculteur/dashboard');
     } catch (err: unknown) {

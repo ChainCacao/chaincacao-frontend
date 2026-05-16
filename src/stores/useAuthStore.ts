@@ -1,15 +1,15 @@
 import { create } from 'zustand';
 import { authService } from '../services/auth.service';
 import { tokenStorage } from '../services/http';
-import type { LoginResponse, User } from '../types/api';
+import type { LoginResponse, SafeUser } from '../types/api';
 
 interface UserState {
-  user: User | null;
+  user: SafeUser | null;
   token: string | null;
   walletAddress: string | null;
   isWalletConnected: boolean;
   notifications: number;
-  login: (session: LoginResponse | User | Record<string, unknown>) => void;
+  login: (session: LoginResponse | SafeUser | Record<string, unknown>) => void;
   logout: () => void;
   setWallet: (address: string) => void;
 }
@@ -23,10 +23,10 @@ export const useAuthStore = create<UserState>((set) => ({
   login: (session) => {
     if ('token' in session && typeof session.token === 'string' && 'user' in session) {
       tokenStorage.set(session.token);
-      set({ user: session.user as User, token: session.token });
+      set({ user: session.user as SafeUser, token: session.token });
       return;
     }
-    set({ user: session as User });
+    set({ user: session as SafeUser });
   },
   logout: () => {
     authService.logout();

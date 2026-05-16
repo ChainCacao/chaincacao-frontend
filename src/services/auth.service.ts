@@ -1,16 +1,17 @@
 import { http, tokenStorage } from './http';
-import type { ApiResponse, LoginRequest, LoginResponse, User } from '../types/api';
+import type { ApiResponse, LoginRequest, LoginResponse, SafeUser } from '../types/api';
 
 export const authService = {
   async login(payload: LoginRequest) {
     const { data } = await http.post<ApiResponse<LoginResponse>>('/auth/login', payload);
-    tokenStorage.set(data.data.token);
-    return data.data;
+    const result = data.data!;
+    tokenStorage.set(result.token);
+    return result;
   },
 
   async me() {
-    const { data } = await http.get<ApiResponse<{ user: User }>>('/auth/me');
-    return data.data.user;
+    const { data } = await http.get<ApiResponse<{ user: SafeUser }>>('/auth/me');
+    return data.data!.user;
   },
 
   logout() {

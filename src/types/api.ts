@@ -1,193 +1,240 @@
-export type Role =
-  | 'AGRICULTEUR'
-  | 'COOPERATIVE'
-  | 'EXPORTATEUR'
-  | 'TRANSFORMATEUR'
-  | 'CERTIFIEUR'
-  | 'MINISTERE'
-  | 'ADMIN';
+import type {
+  Role,
+  Statut,
+  ValidationStatus,
+  CertificationType,
+  Sexe,
+  TypeIdentite,
+  TypePropriete,
+  ModeProduction,
+  StatutConformite,
+  FiliereType,
+  EtapeTrajet,
+  ActionType,
+  BlockchainStatus,
+  JsonValue,
+  User as PrismaUser,
+  LotRecolte,
+  Agriculteur,
+  Cooperative,
+  Transformateur,
+  Certifieur,
+  Exportateur,
+  MinistereAgent,
+  LotHistorique,
+  PartenariatMetier,
+} from './prisma';
 
-export type Statut = 'ACTIF' | 'INACTIF' | 'SUSPENDU';
-export type ValidationStatus = 'EN_ATTENTE' | 'APPROUVE' | 'REJETE';
-export type FiliereType = 'CAFE' | 'CACAO';
-export type StatutConformite = 'EN_ATTENTE' | 'CONFORME' | 'ALERTE' | 'NON_CONFORME';
-export type EtapeTrajet =
-  | 'COLLECTE_FERME'
-  | 'STOCKAGE_COOPERATIVE'
-  | 'FUSION_LOTS'
-  | 'EN_COURS_DE_TRANSIT'
-  | 'LIVRE_TRANSFORMATEUR'
-  | 'LIVRE_EXPORTATEUR';
-export type ActionType = 'PESEE' | 'STOCKAGE' | 'TRANSIT' | 'LIVRAISON' | 'CERTIFICATION' | 'EXPORT';
-export type BlockchainStatus = 'EN_ATTENTE_ANCRAGE' | 'ANCRE_SUR_LA_CHAINE' | 'ECHEC_ANCRAGE';
+export type { Role, Statut, ValidationStatus, CertificationType, Sexe, TypeIdentite, TypePropriete, ModeProduction, StatutConformite, FiliereType, EtapeTrajet, ActionType, BlockchainStatus, JsonValue };
+export type { LotRecolte, Agriculteur, Cooperative, Transformateur, Certifieur, Exportateur, MinistereAgent, LotHistorique, PartenariatMetier };
 
-export type ApiResponse<T> = {
+export type SafeUser = Omit<PrismaUser, 'password'>;
+
+export interface ApiResponse<T = unknown> {
   success: boolean;
   message: string;
-  data: T;
-};
+  data?: T;
+  code?: string;
+}
 
-export type ApiErrorBody = {
-  success: false;
+export interface ApiErrorBody {
+  success: boolean;
   message: string;
-  code?: string | null;
-};
+  code?: string;
+}
 
-export type GpsPoint = {
+export interface LoginRequest {
+  identifier?: string;
+  qrPayload?: string | { internalId: string; type?: string; role?: string; validationStatus?: string };
+  email?: string;
+  password?: string;
+}
+
+export interface LoginResponse {
+  token: string;
+  loginMode: string;
+  user: SafeUser;
+}
+
+export interface DocumentsPayload {
+  rccmUrl?: string;
+  nifUrl?: string;
+  agrementUrl?: string;
+  pieceIdentiteUrl?: string;
+  statutsUrl?: string;
+  procesVerbalUrl?: string;
+  autorisationUrl?: string;
+  autres?: string[];
+}
+
+export interface GpsPoint {
   latitude: number;
   longitude: number;
   precisionMetres?: number;
   capturedAt?: string;
   source?: 'APP_CAMERA' | 'EXIF' | 'DEVICE_GPS';
-};
+}
 
-export type DocumentAssocie = {
+export interface PhotoCapture {
+  photoChampUrl: string;
+  photoGps?: GpsPoint;
+  metadataPhotoExif?: JsonValue;
+}
+
+export interface DocumentAssocie {
   nom: string;
   url: string;
   hashSha256?: string;
   type?: string;
-};
+}
 
-export type User = {
-  id: string;
-  internalId: string;
-  email?: string | null;
-  telephone?: string | null;
+export interface BaseUserRegistration {
+  email: string;
+  password: string;
+  telephone: string;
   name: string;
-  nom?: string;
-  village?: string;
   role: Role;
-  statut: Statut;
-  validationStatus: ValidationStatus;
-  isValidatedByMinistry: boolean;
-  cooperative?: Cooperative | null;
-  agriculteur?: Agriculteur | null;
-  transformateur?: Transformateur | null;
-  exportateur?: Exportateur | null;
-  certifieur?: Certifieur | null;
-  ministereAgent?: { id: string } | null;
-};
+  walletAddress?: string;
+  documents?: DocumentsPayload;
+  hashDocuments?: string;
+}
 
-export type Cooperative = {
-  id: string;
-  userId: string;
+export interface CooperativePayload {
   nomCoop: string;
+  numRemCoop: string;
+  dateAgrement?: string;
+  numEnregistrementCCFCC?: string;
   region: string;
   prefecture: string;
   commune: string;
   canton: string;
   siegeSocial: string;
-};
+  coordenneesGPS?: GpsPoint;
+  certification?: CertificationType;
+  capaciteStockageTonnes?: number;
+  infrastructure?: JsonValue;
+  documents: DocumentsPayload;
+  hashDocuments?: string;
+}
 
-export type Agriculteur = {
-  id: string;
-  userId?: string | null;
+export interface AgriculteurPayload {
   cooperativeId: string;
   nom: string;
   prenom: string;
-  village: string;
-  canton: string;
+  sexe: Sexe;
+  dateNaissance?: string;
+  nationalite?: string;
+  numeroIdentite?: string;
+  typeIdentite?: TypeIdentite;
+  copieIdentiteUrl?: string;
+  telephone?: string;
+  personnesACharge?: number;
   region: string;
   prefecture: string;
   commune: string;
+  canton: string;
+  village: string;
   superficieHa: number;
-  donneesGeospatiales: unknown;
-};
+  donneesGeospatiales: JsonValue;
+  agePlantations?: number;
+  nbPiedsCacao?: number;
+  nbPiedsCafe?: number;
+  capaciteProductionKg?: number;
+  typePropriete: TypePropriete;
+  partsSociales?: number;
+  droitAdhesionPaye?: boolean;
+  acteEngagementUrl?: string;
+  modeProduction?: ModeProduction;
+  documents?: DocumentsPayload;
+  hashDocuments?: string;
+}
 
-export type Transformateur = {
-  id: string;
-  userId: string;
+export interface TransformateurPayload {
   raisonSociale: string;
+  numRCCM: string;
+  numNIF: string;
+  nomResponsable: string;
   ville: string;
   quartierZone: string;
-};
+  coordonneesGPS?: GpsPoint;
+  numAMM?: string;
+  numAgrementCCFCC?: string;
+  documentsUrl: DocumentsPayload;
+  hashDocuments?: string;
+  capaciteAnuelleTonnes?: number;
+  produitsFinis: string[];
+}
 
-export type Exportateur = {
-  id: string;
-  userId: string;
+export interface CertifieurPayload {
+  nomOrganisme: string;
+  numRCCM?: string;
+  numNIF?: string;
+  addresse: string;
+  numAgrement?: string;
+  numEnregistrementCCFCC?: string;
+  accreditation?: string;
+  labelAutorise?: CertificationType;
+  documentsUrl: DocumentsPayload;
+  hashDocuments?: string;
+  datesDernierAudit?: string;
+}
+
+export interface ExportateurPayload {
   raisonSociale: string;
+  numRCCM: string;
+  numNIF: string;
+  codeExportateurOTR: string;
+  nomRepresentant: string;
+  telephoneRepresentant?: string;
+  emailRepresentant?: string;
+  numAgrementCCFCC: string;
+  dateValiditeAgrement: string;
   siegeSocial: string;
   adresseEntrepot: string;
-};
+  coordonneesGPSJson?: GpsPoint;
+  capaciteStockageTonnes?: number;
+  documentsUrl: DocumentsPayload;
+  hashDocuments?: string;
+}
 
-export type Certifieur = {
-  id: string;
-  userId: string;
-  nomOrganisme: string;
-  accreditation?: string | null;
-  labelAutorise?: string | null;
-};
+export interface RegisterRequest {
+  user: BaseUserRegistration;
+  cooperative?: CooperativePayload;
+  agriculteur?: AgriculteurPayload;
+  transformateur?: TransformateurPayload;
+  certifieur?: CertifieurPayload;
+  exportateur?: ExportateurPayload;
+}
 
-export type LotHistorique = {
-  id: string;
-  lotId: string;
-  etape: EtapeTrajet;
-  action: string;
-  actionType?: ActionType | null;
-  acteurId: string;
-  acteurNom: string;
-  acteurRole: Role;
-  localisationNom: string;
-  latitude?: number | null;
-  longitude?: number | null;
-  donneesEtape?: unknown;
-  documentsAssocies?: DocumentAssocie[] | null;
-  blockchainTxHash?: string | null;
-  blockchainStatus: BlockchainStatus;
-  createdAt: string;
-};
+export interface MinistryAgentPayload {
+  nomAgent: string;
+  prenomAgent: string;
+  directionService: string;
+  posteOccupe: string;
+  telephonePro?: string;
+}
 
-export type LotRecolte = {
-  id: string;
-  codeLot: string;
-  agriculteurId?: string | null;
-  cooperativeId: string;
-  lotParentId?: string | null;
-  filiere: FiliereType;
-  especeVariete: string;
-  poidsBrutKg: number;
-  poidsNetKg: number;
-  nbSacsJute: number;
-  tauxHumidite: number;
-  photoChampUrl: string;
-  agentGpsLatitude: number;
-  agentGpsLongitude: number;
-  metadataPhotoExif?: unknown;
-  geolocalisationPreuve: unknown;
-  statutTrajet: EtapeTrajet;
-  statutConformiteEUDR: StatutConformite;
-  transformateurId?: string | null;
-  exportateurId?: string | null;
-  certifieurId?: string | null;
-  documentsAssocies?: DocumentAssocie[] | null;
-  blockchainTxHash?: string | null;
-  tokenId?: string | null;
-  createdAt: string;
-  updatedAt: string;
-  agriculteur?: Agriculteur | null;
-  cooperative?: Cooperative;
-  transformateur?: Transformateur | null;
-  exportateur?: Exportateur | null;
-  certifieur?: Certifieur | null;
-  sousLots?: LotRecolte[];
-  lotParent?: LotRecolte | null;
-  lothistorique?: LotHistorique[];
-};
+export interface MinistryAgentRegisterRequest {
+  user: Omit<BaseUserRegistration, 'role'>;
+  ministereAgent: MinistryAgentPayload;
+}
 
-export type LoginRequest = {
-  identifier?: string;
+export interface CooperativeAgriculteurUserPayload {
   email?: string;
-  qrPayload?: string | Record<string, unknown>;
-  password: string;
-};
+  password?: string;
+  telephone?: string;
+  name?: string;
+  walletAddress?: string;
+  documents?: DocumentsPayload;
+  hashDocuments?: string;
+}
 
-export type LoginResponse = {
-  token: string;
-  loginMode: 'INTERNAL_ID_OR_QR' | 'EMAIL_RECOVERY';
-  user: User;
-};
+export interface CooperativeAgriculteurRegisterRequest {
+  user: CooperativeAgriculteurUserPayload;
+  agriculteur: Omit<AgriculteurPayload, 'cooperativeId' | 'numeroProducteurUTCC'>;
+}
 
-export type CreateLotRequest = {
+export interface CreateLotRequest {
   agriculteurId?: string;
   filiere: FiliereType;
   especeVariete: string;
@@ -195,37 +242,20 @@ export type CreateLotRequest = {
   poidsNetKg: number;
   nbSacsJute: number;
   tauxHumidite: number;
-  photoCapture: {
-    photoChampUrl: string;
-    photoGps?: GpsPoint;
-    metadataPhotoExif?: Record<string, unknown>;
-  };
-  geolocalisationPreuve?: Record<string, unknown>;
+  photoCapture: PhotoCapture;
+  geolocalisationPreuve?: JsonValue;
   documentsAssocies?: DocumentAssocie[];
   dateActionTerrain?: string;
-};
+}
 
-export type LotMutationResponse = {
-  lot: LotRecolte;
-  notification?: {
-    action: string;
-    message: string;
-    lotId: string;
-    codeLot: string;
-    statutTrajet: EtapeTrajet;
-    recipients: Array<{ userId: string; role: Role; actorId: string }>;
-  };
-  alertePoids?: boolean;
-};
-
-export type MergeLotsRequest = {
+export interface MergeLotsRequest {
   lotIds: string[];
   especeVariete?: string;
   documentsAssocies?: DocumentAssocie[];
   dateActionTerrain?: string;
-};
+}
 
-export type TransferLotRequest = {
+export interface TransferLotRequest {
   lotId: string;
   destinataireType: 'TRANSFORMATEUR' | 'EXPORTATEUR';
   destinataireId: string;
@@ -234,36 +264,64 @@ export type TransferLotRequest = {
   longitude?: number;
   documentsAssocies?: DocumentAssocie[];
   dateActionTerrain?: string;
-};
+}
 
-export type ReceiveLotRequest = {
+export interface ReceiveLotRequest {
   lotId: string;
   poidsRecuKg?: number;
   localisationNom?: string;
   latitude?: number;
   longitude?: number;
-  controleQualite?: Record<string, unknown>;
+  controleQualite?: JsonValue;
   documentsAssocies?: DocumentAssocie[];
   dateActionTerrain?: string;
-};
+}
 
-export type LotActionRequest = {
+export interface LotActionRequest {
   lotId: string;
   action: string;
   actionType: ActionType;
-  donneesEtape?: Record<string, unknown>;
+  donneesEtape?: JsonValue;
   documentAssocieUrl?: string;
   documentsAssocies?: DocumentAssocie[];
   localisationNom?: string;
   latitude?: number;
   longitude?: number;
   dateActionTerrain?: string;
-};
+}
 
-export type CertifyLotRequest = {
+export interface CertifyLotRequest {
   lotId: string;
   decision: 'CERTIFIE' | 'REJETE';
   certifieurId?: string;
   notes?: string;
   documentsAssocies?: DocumentAssocie[];
-};
+}
+
+export interface MinistryValidationRequest {
+  userId: string;
+  acteurType: Role;
+  acteurId: string;
+  decision: 'APPROUVE' | 'REJETE';
+  internalId?: string;
+  notesMinistere?: string;
+  documentsVerifies: boolean;
+  validateurId?: string;
+}
+
+export interface LotMutationResponse {
+  lot: LotRecolte;
+  alertePoids?: boolean;
+}
+
+export interface Notification {
+  id: string;
+  userId: string;
+  type: string;
+  title: string;
+  message: string;
+  data?: JsonValue;
+  isRead: boolean;
+  channels: string[];
+  createdAt: string;
+}
