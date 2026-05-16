@@ -83,43 +83,8 @@ export default function CoopRegisterPage() {
   ];
 
   const validateStep = (step: number): boolean => {
-    const newErrors: FormErrors = {};
-
-    switch (step) {
-      case 1:
-        if (!formData.nomCooperative.trim()) newErrors.nomCooperative = 'Nom obligatoire';
-        if (!formData.sigle.trim()) newErrors.sigle = 'Sigle obligatoire';
-        if (!formData.numeroIdentification.trim()) newErrors.numeroIdentification = 'Numéro d\'identification obligatoire';
-        if (!formData.anneeCreation) newErrors.anneeCreation = 'Année de création obligatoire';
-        if (!formData.responsableLegal.trim()) newErrors.responsableLegal = 'Responsable légal obligatoire';
-        if (!formData.email.trim()) newErrors.email = 'Email obligatoire';
-        if (!formData.telephone.trim()) newErrors.telephone = 'Téléphone obligatoire';
-        break;
-        
-      case 2:
-        if (!formData.siegeSocial.trim()) newErrors.siegeSocial = 'Siège social obligatoire';
-        if (!formData.region) newErrors.region = 'Région obligatoire';
-        if (!formData.departement) newErrors.departement = 'Département obligatoire';
-        if (!formData.commune) newErrors.commune = 'Commune obligatoire';
-        if (!formData.coordonneesGPS.trim()) newErrors.coordonneesGPS = 'Coordonnées GPS obligatoires';
-        break;
-        
-      case 3:
-        if (!formData.licenceOfficielle) newErrors.licenceOfficielle = 'Licence officielle obligatoire';
-        if (!formData.registreCommerce) newErrors.registreCommerce = 'Registre de commerce obligatoire';
-        if (!formData.documentLegal) newErrors.documentLegal = 'Document légal obligatoire';
-        if (!formData.photoSiege) newErrors.photoSiege = 'Photo du siège obligatoire';
-        if (!formData.walletAddress.trim()) newErrors.walletAddress = 'Adresse wallet obligatoire';
-        break;
-        
-      case 4:
-        if (!formData.accepteConditions) newErrors.accepteConditions = 'Conditions d\'utilisation obligatoires';
-        if (!formData.accepteBlockchain) newErrors.accepteBlockchain = 'Consentement blockchain obligatoire';
-        break;
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    // Mode présentation : on autorise le passage aux étapes suivantes sans validation
+    return true;
   };
 
   const handleInputChange = (field: keyof CoopFormData, value: any) => {
@@ -159,7 +124,7 @@ export default function CoopRegisterPage() {
       
       // Redirection vers la page de confirmation
       setTimeout(() => {
-        navigate('/cooperative/confirmation-inscription');
+        navigate('/cooperative/confirmation-inscription'); // Redirige vers la nouvelle page de confirmation
       }, 2000);
       
     } catch (error) {
@@ -662,37 +627,6 @@ export default function CoopRegisterPage() {
                   </div>
                 </div>
               </div>
-
-              {/* Wallet Blockchain */}
-              <div className="bg-gold/5 rounded-2xl p-6">
-                <h3 className="font-bold text-cacao mb-4 flex items-center gap-2">
-                  <ShieldCheck size={20} />
-                  Configuration Blockchain
-                </h3>
-                
-                <div>
-                  <label className="block text-sm font-bold text-cacao mb-2">
-                    Adresse Wallet Ethereum <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.walletAddress}
-                    onChange={(e) => handleInputChange('walletAddress', e.target.value)}
-                    className={`w-full bg-white border rounded-xl py-3 px-4 text-sm font-mono focus:ring-4 focus:ring-gold/10 focus:border-gold outline-none transition-all ${
-                      errors.walletAddress ? 'border-red-300' : 'border-cacao/10'
-                    }`}
-                    placeholder="0x742d35Cc6634C0532925a3b844Bc454e4438f44e"
-                  />
-                  {errors.walletAddress && (
-                    <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
-                      <AlertCircle size={12} /> {errors.walletAddress}
-                    </p>
-                  )}
-                  <p className="text-xs text-cacao/60 mt-2">
-                    Cette adresse sera utilisée pour les transactions blockchain et l'attribution des rôles.
-                  </p>
-                </div>
-              </div>
             </div>
           </motion.div>
         );
@@ -739,10 +673,6 @@ export default function CoopRegisterPage() {
                 <div>
                   <span className="font-bold text-cacao/60">Région:</span>
                   <p className="text-cacao">{formData.region}</p>
-                </div>
-                <div className="md:col-span-2">
-                  <span className="font-bold text-cacao/60">Wallet:</span>
-                  <p className="text-cacao font-mono text-xs">{formData.walletAddress}</p>
                 </div>
               </div>
             </div>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   X, User, Sprout, FileText, Wallet, 
   ChevronRight, ChevronLeft, Save, MapPin 
@@ -10,12 +11,37 @@ interface Props {
 }
 
 export default function AddProducerModal({ isOpen, onClose }: Props) {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState({
+    nomComplet: '',
+    telephone: '',
+    localisation: '',
+    commune: '',
+  });
   
   if (!isOpen) return null;
 
   const nextStep = () => setStep(prev => Math.min(prev + 1, 4));
   const prevStep = () => setStep(prev => Math.max(prev - 1, 1));
+
+  const handleFinalize = () => {
+    // Génération d'un ID de démonstration
+    const internalId = `AGRI-${new Date().getFullYear()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
+
+    // Redirection vers la page de confirmation avec les données
+    navigate('/agriculteur/confirmation-inscription', {
+      state: {
+        farmerData: {
+          nom: formData.nomComplet.split(' ')[0] || 'Nom',
+          prenom: formData.nomComplet.split(' ').slice(1).join(' ') || 'Prénom',
+          telephone: formData.telephone,
+          commune: formData.localisation,
+          internalId: internalId
+        }
+      }
+    });
+  };
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
@@ -66,18 +92,36 @@ export default function AddProducerModal({ isOpen, onClose }: Props) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-[10px] font-black text-slate-400 uppercase ml-1">Nom Complet</label>
-                  <input type="text" placeholder="Ex: Koffi Mensah" className="w-full p-3 bg-slate-50 border-none rounded-2xl focus:ring-2 ring-gold/50 outline-none font-medium text-sm" />
+                  <input 
+                    type="text" 
+                    placeholder="Ex: Koffi Mensah" 
+                    value={formData.nomComplet}
+                    onChange={(e) => setFormData({ ...formData, nomComplet: e.target.value })}
+                    className="w-full p-3 bg-slate-50 border-none rounded-2xl focus:ring-2 ring-gold/50 outline-none font-medium text-sm" 
+                  />
                 </div>
                 <div className="space-y-1">
                   <label className="text-[10px] font-black text-slate-400 uppercase ml-1">Téléphone</label>
-                  <input type="tel" placeholder="+228 90 00 00 00" className="w-full p-3 bg-slate-50 border-none rounded-2xl focus:ring-2 ring-gold/50 outline-none font-medium text-sm" />
+                  <input 
+                    type="tel" 
+                    placeholder="+228 90 00 00 00" 
+                    value={formData.telephone}
+                    onChange={(e) => setFormData({ ...formData, telephone: e.target.value })}
+                    className="w-full p-3 bg-slate-50 border-none rounded-2xl focus:ring-2 ring-gold/50 outline-none font-medium text-sm" 
+                  />
                 </div>
               </div>
               <div className="space-y-1">
                 <label className="text-[10px] font-black text-slate-400 uppercase ml-1">Localisation (Village/Commune)</label>
                 <div className="relative">
                   <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-gold" size={18} />
-                  <input type="text" placeholder="Rechercher ou pointer sur la carte..." className="w-full pl-10 pr-4 py-3 bg-slate-50 border-none rounded-2xl focus:ring-2 ring-gold/50 outline-none font-medium text-sm" />
+                  <input 
+                    type="text" 
+                    placeholder="Rechercher ou pointer sur la carte..." 
+                    value={formData.localisation}
+                    onChange={(e) => setFormData({ ...formData, localisation: e.target.value })}
+                    className="w-full pl-10 pr-4 py-3 bg-slate-50 border-none rounded-2xl focus:ring-2 ring-gold/50 outline-none font-medium text-sm" 
+                  />
                 </div>
               </div>
             </div>
@@ -156,6 +200,7 @@ export default function AddProducerModal({ isOpen, onClose }: Props) {
             </button>
           ) : (
             <button 
+              onClick={handleFinalize}
               className="bg-emerald-600 text-white px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest flex items-center gap-2 shadow-lg shadow-emerald-200 active:scale-95 transition-all"
             >
               Finaliser l'enregistrement <Save size={16} />

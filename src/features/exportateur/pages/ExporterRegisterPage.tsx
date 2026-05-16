@@ -91,43 +91,8 @@ export default function ExporterRegisterPage() {
   ];
 
   const validateStep = (step: number): boolean => {
-    const newErrors: FormErrors = {};
-
-    switch (step) {
-      case 1:
-        if (!formData.nomEntreprise.trim()) newErrors.nomEntreprise = 'Nom obligatoire';
-        if (!formData.sigle.trim()) newErrors.sigle = 'Sigle obligatoire';
-        if (!formData.numeroExportateur.trim()) newErrors.numeroExportateur = 'Numéro d\'exportateur obligatoire';
-        if (!formData.anneeCreation) newErrors.anneeCreation = 'Année de création obligatoire';
-        if (!formData.capaciteExport.trim()) newErrors.capaciteExport = 'Capacité d\'export obligatoire';
-        if (!formData.responsable.trim()) newErrors.responsable = 'Responsable obligatoire';
-        if (!formData.email.trim()) newErrors.email = 'Email obligatoire';
-        if (!formData.telephone.trim()) newErrors.telephone = 'Téléphone obligatoire';
-        break;
-        
-      case 2:
-        if (!formData.siegeSocial.trim()) newErrors.siegeSocial = 'Siège social obligatoire';
-        if (!formData.region) newErrors.region = 'Région obligatoire';
-        if (!formData.departement) newErrors.departement = 'Département obligatoire';
-        if (!formData.commune) newErrors.commune = 'Commune obligatoire';
-        if (!formData.coordonneesGPS.trim()) newErrors.coordonneesGPS = 'Coordonnées GPS obligatoires';
-        break;
-        
-      case 3:
-        if (!formData.certificationExport) newErrors.certificationExport = 'Certification d\'export obligatoire';
-        if (!formData.agrementMinistériel) newErrors.agrementMinistériel = 'Agrément ministériel obligatoire';
-        if (!formData.photoEntrepot) newErrors.photoEntrepot = 'Photo de l\'entrepôt obligatoire';
-        if (!formData.walletAddress.trim()) newErrors.walletAddress = 'Adresse wallet obligatoire';
-        break;
-        
-      case 4:
-        if (!formData.accepteConditions) newErrors.accepteConditions = 'Conditions d\'utilisation obligatoires';
-        if (!formData.accepteBlockchain) newErrors.accepteBlockchain = 'Consentement blockchain obligatoire';
-        break;
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    // Mode présentation : on autorise le passage aux étapes suivantes sans validation
+    return true;
   };
 
   const handleInputChange = (field: keyof ExporterFormData, value: any) => {

@@ -4,11 +4,13 @@ import LoginPage from './features/agriculteur/pages/LoginPage';
 import Dashboard from './features/agriculteur/pages/Dashboard';
 import CreateLotPage from './features/agriculteur/pages/CreateLotPage';
 import LotDetailPage from './features/agriculteur/pages/LotDetailPage';
+import FarmerConfirmationPage from './features/agriculteur/pages/FarmerConfirmationPage';
 import LotGroupingView from './features/agriculteur/pages/LotGroupingView';
 import CoopLandingPage from './features/coperative/pages/CoopLandingPage';
 import CoopDashboard from './features/coperative/pages/CoopDashboard';
 import CoopLoginPage from './features/coperative/pages/CoopLoginPage';
 import CoopRegisterPage from './features/coperative/pages/CoopRegisterPage';
+import CoopConfirmationPage from './features/coperative/pages/CoopConfirmationPage';
 import CoopTransferPage from './features/coperative/pages/CoopTransferPage';
 import LotGrouping from './features/coperative/pages/LotGrouping';
 import ProducerManagementPage from './features/coperative/pages/ProducerManagementPage';
@@ -41,11 +43,13 @@ function App() {
         <Route path="/agriculteur/dashboard" element={<Dashboard />} />
         <Route path="/agriculteur/nouveau-lot" element={<CreateLotPage />} />
         <Route path="/agriculteur/lot/:id" element={<LotDetailPage />} />
+        <Route path="/agriculteur/confirmation-inscription" element={<FarmerConfirmationPage />} />
         <Route path="/agriculteur/regroupement" element={<LotGroupingView />} />
         <Route path="/cooperative" element={<CoopLandingPage />} />
         <Route path="/cooperative/dashboard" element={<CoopDashboard />} />
         <Route path="/cooperative/login" element={<CoopLoginPage />} />
         <Route path="/cooperative/register" element={<CoopRegisterPage />} />
+        <Route path="/cooperative/confirmation-inscription" element={<CoopConfirmationPage />} />
         <Route path="/cooperative/membres" element={<ProducerManagementPage />} />
         <Route path="/cooperative/partenaires" element={<PartnerModule />} />
         <Route path="/cooperative/regroupement" element={<LotGrouping 
